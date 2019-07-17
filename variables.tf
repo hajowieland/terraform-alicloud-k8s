@@ -6,143 +6,110 @@ variable "enable_alibaba" {
 
 variable "random_cluster_suffix" {
   description = "Random 6 byte hex suffix for cluster name"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "ssh_public_key_path" {
   description = "Path to your existing SSH public key file"
-  type = string
-  default = "~/.ssh/id_rsa.pub"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 variable "ssh_key_pair_name" {
   description = "Name of the Alibaba Cloud Key pair"
-  type = string
-  default = "my-key-pair"
+  type        = string
+  default     = "my-key-pair"
 }
 
-
 variable "ali_access_key" {
-    description = "Alibaba Cloud access key"
-    type = string
+  description = "Alibaba Cloud access key"
+  type        = string
 }
 
 variable "ali_secret_key" {
-    description = "Alibaba Cloud secret key"
-    type = string
+  description = "Alibaba Cloud secret key"
+  type        = string
 }
 
 variable "ali_region" {
-    description = "Alibaba Cloud region (e.g. `eu-central-1` => Frankfurt, Germany)"
-    type = string
-    default = "eu-central-1"
+  description = "Alibaba Cloud region (e.g. `eu-central-1` => Frankfurt, Germany)"
+  type        = string
+  default     = "eu-central-1"
 }
 
-variable "number_format" {
-  description = "The number format used to output."
-  default     = "%02d"
-}
-
-
-
-variable "vpc_name" {
+variable "ali_vpc_name" {
   description = "The vpc name used to create a new vpc when 'vpc_id' is not specified. Default to variable `example_name`"
   default     = ""
 }
 
-variable "vpc_id" {
-  description = "A existing vpc id used to create several vswitches and other resources."
-  default     = ""
-}
-
-variable "vpc_cidr" {
+variable "ali_vpc_cidr" {
   description = "The cidr block used to launch a new vpc when 'vpc_id' is not specified."
   default     = "10.1.0.0/21"
 }
 
-
-# VSwitch variables
-variable "vswitch_name_prefix" {
-  description = "The vswitch name prefix used to create several new vswitches. Default to variable `example_name`"
-  default     = ""
-}
-
-variable "vswitch_ids" {
-  description = "List of existing vswitch id."
-  type        = "list"
-  default     = []
-}
-
-variable "vswitch_cidrs" {
+variable "ali_vswitch_cidrs" {
   description = "List of cidr blocks used to create several new vswitches when 'vswitch_ids' is not specified."
   type        = "list"
   default     = ["10.1.2.0/24"]
 }
 
-variable "new_nat_gateway" {
-  description = "Whether to create a new nat gateway. In this template, a new nat gateway will create a nat gateway, eip and server snat entries."
-  type = bool
-  default     = true
-}
-
-
-variable "ali_name" {
+variable "ack_name" {
   description = "Alibaba Managed Kubernetes cluster name (e.g. `k8s-ali`)"
-  type = string
-  default = "k8s-ali"
+  type        = string
+  default     = "k8s-ali"
 }
 
-variable "ali_node_count" {
+variable "ack_node_count" {
   description = "Alibaba Managed Kubernetes cluster worker node count (e.g. `[2]`)"
-  type = list
-  default = [2]
+  type        = list
+  default     = [2]
 }
 
-variable "ali_node_type" {
+variable "ack_node_type" {
   description = "Alibaba node instance type for worker nodes (e.g. `ecs.sn1.medium` => 2x vCPU 4GB memory)"
-  type = string
-  default = "ecs.sn1.medium"
+  type        = string
+  default     = "ecs.sn1.medium"
 }
 
 variable "ack_worker_system_disk_category" {
   description = "System disk category of worker nodes (e.g. `cloud_efficiency` or `cloud_ssd`)"
-  type = string
-  default = "cloud_efficiency"
+  type        = string
+  default     = "cloud_efficiency"
 }
 
 variable "ack_worker_system_disk_size" {
   description = "System disk size of worker nodes (min.: `20` max: `32768`)"
-  type = number
-  default = 20
+  type        = number
+  default     = 20
 }
 
 variable "ack_worker_data_disk_category" {
   description = "Data disk category of worker nodes (e.g. `cloud_efficiency` or `cloud_ssd`)"
-  type = string
-  default = "cloud_efficiency"
+  type        = string
+  default     = "cloud_efficiency"
 }
 
 variable "ack_worker_data_disk_size" {
   description = "Data disk size of worker nodes (min.: `20` max: `32768`)"
-  type = number
-  default = 20
+  type        = number
+  default     = 20
 }
 
 variable "ack_k8s_cni" {
   description = "Kubernetes CNI plugin to use for networking (e.g. `flannel` or `terway`)"
-  type = string
-  default = "flannel"
+  type        = string
+  default     = "flannel"
 }
 
 variable "ack_k8s_pod_cidr" {
   description = "CIDR for Kubernetes pod network"
-  type = string
-  default = "172.20.0.0/16"
+  type        = string
+  default     = "172.20.0.0/16"
 }
 
 variable "ack_k8s_service_cidr" {
   description = "CIDR for Kubernetes service network"
-  type = string
-  default = "172.21.0.0/20"
+  type        = string
+  default     = "172.21.0.0/20"
 }
