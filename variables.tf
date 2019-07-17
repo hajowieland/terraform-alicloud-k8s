@@ -1,5 +1,5 @@
 variable "enable_alibaba" {
-  description = "Enable / Disable Alibaba (e.g. `1`)"
+  description = "Enable / Disable Alibaba Cloud k8s (e.g. `true`)"
   type        = bool
   default     = true
 }
@@ -8,6 +8,22 @@ variable "random_cluster_suffix" {
   description = "Random 6 byte hex suffix for cluster name"
   type        = string
   default     = ""
+}
+
+variable "ali_region" {
+  description = "Alibaba Cloud region (e.g. `eu-central-1` => Frankfurt, Germany)"
+  type        = string
+  default     = "eu-central-1"
+}
+
+variable "ali_access_key" {
+  description = "Alibaba Cloud access key"
+  type        = string
+}
+
+variable "ali_secret_key" {
+  description = "Alibaba Cloud secret key"
+  type        = string
 }
 
 variable "ssh_public_key_path" {
@@ -22,35 +38,19 @@ variable "ssh_key_pair_name" {
   default     = "my-key-pair"
 }
 
-variable "ali_access_key" {
-  description = "Alibaba Cloud access key"
-  type        = string
-}
-
-variable "ali_secret_key" {
-  description = "Alibaba Cloud secret key"
-  type        = string
-}
-
-variable "ali_region" {
-  description = "Alibaba Cloud region (e.g. `eu-central-1` => Frankfurt, Germany)"
-  type        = string
-  default     = "eu-central-1"
-}
-
 variable "ali_vpc_name" {
-  description = "The vpc name used to create a new vpc when 'vpc_id' is not specified. Default to variable `example_name`"
-  default     = ""
+  description = "Alibaba Cloud VPC name"
+  default     = "k8svpc"
 }
 
 variable "ali_vpc_cidr" {
-  description = "The cidr block used to launch a new vpc when 'vpc_id' is not specified."
+  description = "Alibaba Cloud VPC CIDR block"
   default     = "10.1.0.0/21"
 }
 
 variable "ali_vswitch_cidrs" {
-  description = "List of cidr blocks used to create several new vswitches when 'vswitch_ids' is not specified."
-  type        = "list"
+  description = "List of CIDR blocks used to create several new VSwitches"
+  type        = list
   default     = ["10.1.2.0/24"]
 }
 
@@ -79,7 +79,7 @@ variable "ack_worker_system_disk_category" {
 }
 
 variable "ack_worker_system_disk_size" {
-  description = "System disk size of worker nodes (min.: `20` max: `32768`)"
+  description = "System disk size of worker nodes in GB (min.: `20` max: `32768`)"
   type        = number
   default     = 20
 }
@@ -91,7 +91,7 @@ variable "ack_worker_data_disk_category" {
 }
 
 variable "ack_worker_data_disk_size" {
-  description = "Data disk size of worker nodes (min.: `20` max: `32768`)"
+  description = "Data disk size of worker nodes in GB (min.: `20` max: `32768`)"
   type        = number
   default     = 20
 }
