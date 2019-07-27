@@ -50,20 +50,16 @@ See tables at the end for a comprehensive list of inputs and outputs.
 |------|-------------|:----:|:-----:|:-----:|
 | enable_alibaba | Enable / Disable Alibaba Cloud k8s  | bool | true | yes |
 | random_cluster_suffix | Random 6 byte hex suffix for cluster name | string |  | true |
+| ali_region | Alibaba Cloud region | string | eu-central-1 | true |
 | ali_access_key | Alibaba Cloud region | string |   | yes |
 | ali_secret_key | Alibaba Cloud secret key | string |  | yes |
 | ssh_public_key_path | Path to your existing SSH public key file | string | ~/.ssh/id_rsa.pub | yes |
-| ssh_key_pair_name | Name of the Alibaba Cloud Key pair | string | my-key-pair | yes |
 | ali_vpc_name | Alibaba Cloud VPC name | string | k8svpc | yes |
 | ali_vpc_cidr | Alibaba Cloud VPC CIDR block | string | 10.1.0.0/21 | yes |
 | ali_vswitch_cidrs | List of CIDR blocks used to create several new VSwitches | list | 10.1.2.0/24 | yes |
 | ack_name | Alibaba Managed Kubernetes cluster name | string | k8s-ali | yes |
 | ack_node_count | Alibaba Managed Kubernetes cluster worker node count | list | 2 | yes |
 | ack_node_type | Alibaba node instance type for worker nodes | string | ecs.sn1.medium | yes |
-| ack_worker_system_disk_category | System disk category of worker nodes | string | cloud_efficiency | yes |
-| ack_worker_system_disk_size | System disk size of worker nodes in GB | number | 20 | yes |
-| ack_worker_data_disk_category | Data disk category of worker nodes | number | cloud_efficiency | yes |
-| ack_worker_data_disk_size | Data disk size of worker nodes in GB | number | 20 | yes |
 | ack_k8s_cni | Kubernetes CNI plugin to use for networking | string | flannel | yes |
 | ack_k8s_pod_cidr | CIDR for Kubernetes pod network | string | 172.20.0.0/16 | yes |
 | ack_k8s_service_cidr | CIDR for Kubernetes service network | string | 172.21.0.0/20 | yes |
@@ -74,4 +70,4 @@ See tables at the end for a comprehensive list of inputs and outputs.
 
 | Name | Description |
 |------|-------------|
-| alicloud_eip_ip_address | Alibaba Cloud EIP IPv4 address |
+| alicloud_eip_ip_address | Alibaba Cloud EIP IPv4 address (used for NAT gateway) |
