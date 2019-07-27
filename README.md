@@ -38,8 +38,6 @@ See tables at the end for a comprehensive list of inputs and outputs.
 
 * Default region: **eu-central-1** _(Frankfurt, Germany)_
 * Default node type: **ecs.sn1.medium** _(2x vCPU, 4.0GB memory)_ (choose your cpu and memory configuration -> auto selection of the right instance type)
-* Default worker system disk size is **20GB**
-* Default worker data disk size is **20GB**
 * Default node pool size: **2**
 
 
