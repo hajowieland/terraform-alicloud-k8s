@@ -32,12 +32,6 @@ variable "ssh_public_key_path" {
   default     = "~/.ssh/id_rsa.pub"
 }
 
-variable "ssh_key_pair_name" {
-  description = "Name of the Alibaba Cloud Key pair"
-  type        = string
-  default     = "my-key-pair"
-}
-
 variable "ali_vpc_name" {
   description = "Alibaba Cloud VPC name"
   default     = "k8svpc"
@@ -50,7 +44,7 @@ variable "ali_vpc_cidr" {
 
 variable "ali_vswitch_cidrs" {
   description = "List of CIDR blocks used to create several new VSwitches"
-  type        = list
+  type        = list(string)
   default     = ["10.1.2.0/24"]
 }
 
@@ -62,38 +56,14 @@ variable "ack_name" {
 
 variable "ack_node_count" {
   description = "Alibaba Managed Kubernetes cluster worker node count (e.g. `[2]`)"
-  type        = list
-  default     = [2]
+  type        = number
+  default     = 2
 }
 
 variable "ack_node_type" {
   description = "Alibaba node instance type for worker nodes (e.g. `ecs.sn1.medium` => 2x vCPU 4GB memory)"
   type        = string
   default     = "ecs.sn1.medium"
-}
-
-variable "ack_worker_system_disk_category" {
-  description = "System disk category of worker nodes (e.g. `cloud_efficiency` or `cloud_ssd`)"
-  type        = string
-  default     = "cloud_efficiency"
-}
-
-variable "ack_worker_system_disk_size" {
-  description = "System disk size of worker nodes in GB (min.: `20` max: `32768`)"
-  type        = number
-  default     = 20
-}
-
-variable "ack_worker_data_disk_category" {
-  description = "Data disk category of worker nodes (e.g. `cloud_efficiency` or `cloud_ssd`)"
-  type        = string
-  default     = "cloud_efficiency"
-}
-
-variable "ack_worker_data_disk_size" {
-  description = "Data disk size of worker nodes in GB (min.: `20` max: `32768`)"
-  type        = number
-  default     = 20
 }
 
 variable "ack_k8s_cni" {
