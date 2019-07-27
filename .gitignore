@@ -122,3 +122,4 @@ override.tf.json
 
 # kubeconfig file
 kubeconfig_ack
+
