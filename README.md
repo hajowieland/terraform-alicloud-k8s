@@ -1,6 +1,6 @@
-# Terraform Kubernetes on Alibaba Cloud
+# Terraform Managed Kubernetes on Alibaba Cloud ("aliyun")
 
-This repository contains the Terraform module for creating a simple but ready-to-use Kubernetes Cluster on Alibaba Cloud Container Service for Kubernetes (ACK).
+This repository contains the Terraform module for creating a simple but ready-to-use managed Kubernetes Cluster on Alibaba Cloud Container Service for Kubernetes (ACK).
 
 It uses the latest available Kubernetes version available in the Alibaba Cloud region, creates all necessary RAM roles with its policies and generates a kubeconfig file at completion.
 
@@ -53,20 +53,20 @@ See tables at the end for a comprehensive list of inputs and outputs.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | enable_alibaba | Enable / Disable Alibaba Cloud k8s  | bool | true | yes |
-| random_cluster_suffix | Random 6 byte hex suffix for cluster name | string |  | true |
-| ali_region | Alibaba Cloud region | string | eu-central-1 | true |
+| random_cluster_suffix | Random 6 byte hex suffix for cluster name | string |  | true | no |
+| ali_region | Alibaba Cloud region | string | eu-central-1 | true | no |
 | ali_access_key | Alibaba Cloud access key | string |   | yes |
 | ali_secret_key | Alibaba Cloud secret key | string |  | yes |
-| ssh_public_key_path | Path to your existing SSH public key file | string | ~/.ssh/id_rsa.pub | yes |
-| ali_vpc_name | Alibaba Cloud VPC name | string | k8svpc | yes |
-| ali_vpc_cidr | Alibaba Cloud VPC CIDR block | string | 10.1.0.0/21 | yes |
-| ali_vswitch_cidrs | List of CIDR blocks used to create several new VSwitches | list(string) | 10.1.2.0/24 | yes |
-| ack_name | Alibaba Managed Kubernetes cluster name | string | k8s-ali | yes |
-| ack_node_count | Alibaba Managed Kubernetes cluster worker node count | list | 2 | yes |
-| ack_node_types | Alibaba node instance types for worker nodes | list(string) | ecs.sn1.medium | yes |
-| ack_k8s_cni | Kubernetes CNI plugin to use for networking | string | flannel | yes |
-| ack_k8s_pod_cidr | CIDR for Kubernetes pod network | string | 172.20.0.0/16 | yes |
-| ack_k8s_service_cidr | CIDR for Kubernetes service network | string | 172.21.0.0/20 | yes |
+| ssh_public_key_path | Path to your existing SSH public key file | string | ~/.ssh/id_rsa.pub | no |
+| ali_vpc_name | Alibaba Cloud VPC name | string | k8svpc | no |
+| ali_vpc_cidr | Alibaba Cloud VPC CIDR block | string | 10.1.0.0/21 | no |
+| ali_vswitch_cidrs | List of CIDR blocks used to create several new VSwitches | list(string) | 10.1.2.0/24 | no |
+| ack_name | Alibaba Managed Kubernetes cluster name | string | k8s-ali | no |
+| ack_node_count | Alibaba Managed Kubernetes cluster worker node count | list | 2 | no |
+| ack_node_types | Alibaba node instance types for worker nodes | list(string) | ecs.sn1.medium | no |
+| ack_k8s_cni | Kubernetes CNI plugin to use for networking | string | flannel | no |
+| ack_k8s_pod_cidr | CIDR for Kubernetes pod network | string | 172.20.0.0/16 | no |
+| ack_k8s_service_cidr | CIDR for Kubernetes service network | string | 172.21.0.0/20 | no |
 
 
 
