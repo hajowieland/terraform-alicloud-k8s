@@ -53,8 +53,8 @@ See tables at the end for a comprehensive list of inputs and outputs.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | enable_alibaba | Enable / Disable Alibaba Cloud k8s  | bool | true | yes |
-| random_cluster_suffix | Random 6 byte hex suffix for cluster name | string |  | true | no |
-| ali_region | Alibaba Cloud region | string | eu-central-1 | true | no |
+| random_cluster_suffix | Random 6 byte hex suffix for cluster name | string |  | no|
+| ali_region | Alibaba Cloud region | string | eu-central-1 | no |
 | ali_access_key | Alibaba Cloud access key | string |   | yes |
 | ali_secret_key | Alibaba Cloud secret key | string |  | yes |
 | ssh_public_key_path | Path to your existing SSH public key file | string | ~/.ssh/id_rsa.pub | no |
