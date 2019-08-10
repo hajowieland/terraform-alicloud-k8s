@@ -5,8 +5,3 @@ output "alicloud_eip_ip_address" {
 output "kubeconfig_path_oci" {
   value = alicloud_cs_managed_kubernetes.ack.*.kube_config
 }
-
-output "alicloud_zones" {
-  value = data.alicloud_zones.main.0.id
-}
-
