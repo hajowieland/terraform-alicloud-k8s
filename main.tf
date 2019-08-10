@@ -175,10 +175,12 @@ resource "alicloud_ram_policy" "k8s-AliyunOOSaccess" {
 }
 
 
-
+##################################################################
+###  RAM roles, policies, attachments
 ##################################################################
 
 ## Get default aliyun policies where it makes sense (kinda)
+
 data "alicloud_ram_policies" "AliyunECSReadOnlyAccess" {
   count      = var.enable_alibaba ? 1 : 0
   name_regex = "^AliyunECSReadOnlyAccess$"
@@ -294,14 +296,12 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunOSSAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 }
 
-
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSReadOnlyAccess-AliyunCSClusterRole" {
   count       = var.enable_alibaba ? 1 : 0
   policy_name = data.alicloud_ram_policies.AliyunECSReadOnlyAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 }
-
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-AliyunCSClusterRole" {
   count       = var.enable_alibaba ? 1 : 0
@@ -323,11 +323,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-Aliyu
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 }
-
-
-
-
-
 
 ## AliyunCSDefaultRole@role.5395559225751014.onaliyunservice.com
 resource "alicloud_ram_role" "AliyunCSDefaultRole" {
@@ -482,7 +477,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 }
 
-
 ## AliyunCSServerlessKubernetesRole@role.5395559225751014.onaliyunservice.com
 resource "alicloud_ram_role" "AliyunCSServerlessKubernetesRole" {
   count       = var.enable_alibaba ? 1 : 0
@@ -513,7 +507,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCRaccess-Aliyun
   policy_type = alicloud_ram_policy.k8s-AliyunCRaccess.type
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 }
-
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-AliyunCSServerlessKubernetesRole" {
   count       = var.enable_alibaba ? 1 : 0
@@ -549,7 +542,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECIFullAccess-Aliyu
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 }
-
 
 ## AliyunESSDefaultRole@role.5395559225751014.onaliyunservice.com
 resource "alicloud_ram_role" "AliyunESSDefaultRole" {
@@ -596,7 +588,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunRAMpassrole-Ali
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 }
 
-
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-AliyunESSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
   policy_name = data.alicloud_ram_policies.AliyunECSFullAccess[count.index].policies.0.name
@@ -631,7 +622,6 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunMNSFullAccess-Aliyu
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 }
-
 
 # AliyunCSKubernetesAuditRole@role.5395559225751014.onaliyunservice.com
 resource "alicloud_ram_role" "AliyunCSKubernetesAuditRole" {
