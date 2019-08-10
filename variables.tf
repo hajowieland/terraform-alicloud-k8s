@@ -39,13 +39,13 @@ variable "ali_vpc_name" {
 
 variable "ali_vpc_cidr" {
   description = "Alibaba Cloud VPC CIDR block"
-  default     = "10.1.0.0/21"
+  default     = "10.0.0.0/8"
 }
 
 variable "ali_vswitch_cidrs" {
   description = "List of CIDR blocks used to create several new VSwitches"
   type        = list(string)
-  default     = ["10.1.2.0/24"]
+  default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
 variable "ack_name" {
@@ -60,10 +60,10 @@ variable "ack_node_count" {
   default     = 2
 }
 
-variable "ack_node_type" {
-  description = "Alibaba node instance type for worker nodes (e.g. `ecs.sn1.medium` => 2x vCPU 4GB memory)"
-  type        = string
-  default     = "ecs.sn1.medium"
+variable "ack_node_types" {
+  description = "Alibaba node instance types for worker nodes (e.g. `ecs.sn1.medium` => 2x vCPU 4GB memory)"
+  type        = list(string)
+  default     = ["ecs.sn1.medium"]
 }
 
 variable "ack_k8s_cni" {
