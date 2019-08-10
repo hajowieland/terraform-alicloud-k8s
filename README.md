@@ -2,7 +2,7 @@
 
 This repository contains the Terraform module for creating a simple but ready-to-use Kubernetes Cluster on Alibaba Cloud Container Service for Kubernetes (ACK).
 
-It uses the latest available Kubernetes version available in the Alibaba Cloud region and creates a kubeconfig file at completion.
+It uses the latest available Kubernetes version available in the Alibaba Cloud region, creates all necessary RAM roles with its policies and generates a kubeconfig file at completion.
 
 
 - [Terraform Kubernetes on Alibaba Cloud](#Terraform-Kubernetes-on-Alibaba-Cloud)
