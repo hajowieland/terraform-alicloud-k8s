@@ -5,6 +5,11 @@ This repository contains the Terraform module for creating a simple but ready-to
 It uses the latest available Kubernetes version available in the Alibaba Cloud region, creates all necessary RAM roles with its policies and generates a kubeconfig file at completion.
 
 
+<p align="center">
+<img alt="Alibaba Cloud Logo" width="600" height="100" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Alibaba-cloud-logo-grey-2-01.png">
+</p>
+
+
 - [Terraform Kubernetes on Alibaba Cloud](#Terraform-Kubernetes-on-Alibaba-Cloud)
   - [Requirements](#Requirements)
   - [Features](#Features)
