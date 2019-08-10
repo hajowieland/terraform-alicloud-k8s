@@ -21,7 +21,8 @@ You need an [Alibaba Cloud](https://portal.aws.amazon.com/gp/aws/developer/regis
 
 ## Features
 
-* Always uses latest Kubernetes version available at AWS region
+* Always uses latest Kubernetes version available at Alibaba Cloud region
+* Creates all necessary RAM roles and policies 
 * **kubeconfig** file generation
 
 
@@ -54,10 +55,10 @@ See tables at the end for a comprehensive list of inputs and outputs.
 | ssh_public_key_path | Path to your existing SSH public key file | string | ~/.ssh/id_rsa.pub | yes |
 | ali_vpc_name | Alibaba Cloud VPC name | string | k8svpc | yes |
 | ali_vpc_cidr | Alibaba Cloud VPC CIDR block | string | 10.1.0.0/21 | yes |
-| ali_vswitch_cidrs | List of CIDR blocks used to create several new VSwitches | list | 10.1.2.0/24 | yes |
+| ali_vswitch_cidrs | List of CIDR blocks used to create several new VSwitches | list(string) | 10.1.2.0/24 | yes |
 | ack_name | Alibaba Managed Kubernetes cluster name | string | k8s-ali | yes |
 | ack_node_count | Alibaba Managed Kubernetes cluster worker node count | list | 2 | yes |
-| ack_node_type | Alibaba node instance type for worker nodes | string | ecs.sn1.medium | yes |
+| ack_node_types | Alibaba node instance types for worker nodes | list(string) | ecs.sn1.medium | yes |
 | ack_k8s_cni | Kubernetes CNI plugin to use for networking | string | flannel | yes |
 | ack_k8s_pod_cidr | CIDR for Kubernetes pod network | string | 172.20.0.0/16 | yes |
 | ack_k8s_service_cidr | CIDR for Kubernetes service network | string | 172.21.0.0/20 | yes |
@@ -69,3 +70,4 @@ See tables at the end for a comprehensive list of inputs and outputs.
 | Name | Description |
 |------|-------------|
 | alicloud_eip_ip_address | Alibaba Cloud EIP IPv4 address (used for NAT gateway) |
+| kubeconfig_path_oci | kubeconfig file path |
