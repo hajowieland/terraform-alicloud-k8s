@@ -37,7 +37,7 @@ resource "alicloud_nat_gateway" "default" {
   name          = "${var.ack_name}-${random_id.cluster_name[count.index].hex}-natgw"
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
   depends_on = [alicloud_vswitch.vswitches]
 }
@@ -102,7 +102,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -125,7 +125,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -149,7 +149,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -172,7 +172,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -195,7 +195,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -314,7 +314,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -325,7 +325,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunOSSAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -336,7 +336,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSReadOnlyAccess-A
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -347,7 +347,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -358,7 +358,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -369,7 +369,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -397,7 +397,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -408,7 +408,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunRAMpassrole-Ali
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -419,7 +419,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -430,7 +430,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -441,7 +441,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -452,7 +452,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -463,7 +463,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunDNSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -474,7 +474,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -485,7 +485,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunROSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -496,7 +496,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunESSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -507,7 +507,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -535,7 +535,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -546,7 +546,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCRaccess-Aliyun
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -557,7 +557,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -568,7 +568,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -579,7 +579,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -590,7 +590,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -618,7 +618,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -629,7 +629,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCRaccess-Aliyun
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -640,7 +640,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -651,7 +651,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -662,7 +662,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -673,7 +673,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunPvtzFullAccess-Aliy
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -684,7 +684,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECIFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -712,7 +712,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -723,7 +723,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunOOSaccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -734,7 +734,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -745,7 +745,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunRAMpassrole-Ali
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -756,7 +756,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -767,7 +767,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -778,7 +778,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -789,7 +789,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -800,7 +800,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunMNSFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -828,7 +828,7 @@ EOF
   force       = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -839,7 +839,7 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-Aliyu
   role_name   = alicloud_ram_role.AliyunCSKubernetesAuditRole[count.index].name
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
