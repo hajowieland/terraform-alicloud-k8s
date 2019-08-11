@@ -4,6 +4,9 @@ This repository contains the Terraform module for creating a simple but ready-to
 
 It uses the latest available Kubernetes version available in the Alibaba Cloud region, creates all necessary RAM roles with its policies and generates a kubeconfig file at completion.
 
+#### Link to my comprehensive blog post (beginner friendly):
+[https://napo.io/posts/terraform-kubernetes-multi-cloud-ack-aks-dok-eks-gke-oke/#alibaba-cloud](https://napo.io/posts/terraform-kubernetes-multi-cloud-ack-aks-dok-eks-gke-oke/#alibaba-cloud)
+
 
 <p align="center">
 <img alt="Alibaba Cloud Logo" width="400" height="70" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Alibaba-cloud-logo-grey-2-01.png">
