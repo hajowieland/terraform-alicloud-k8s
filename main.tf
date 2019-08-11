@@ -80,98 +80,123 @@ resource "alicloud_snat_entry" "default" {
 # We prefix our manually created policies with k8s-*
 
 resource "alicloud_ram_policy" "k8s-AliyunOSSAccess" {
+  count       = var.enable_alibaba ? 1 : 0
   name        = "k8s-AliyunOSSAccess"
   document    = <<EOF
-  {
-    "Statement": [
-      {
-        "Action": [
-          "oss:PutObject",
-          "oss:ListObjects",
-          "oss:GetObject"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ],
-      "Version": "1"
-  }
-  EOF
+{
+  "Statement": [
+    {
+      "Action": [
+        "oss:PutObject",
+        "oss:ListObjects",
+        "oss:GetObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ],
+    "Version": "1"
+}
+EOF
   description = "Allow access by CS to OSS"
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_policy" "k8s-AliyunCMSAccess" {
+  count       = var.enable_alibaba ? 1 : 0
   name        = "k8s-AliyunCMSAccess"
   document    = <<EOF
-  {
-    "Statement": [
-      {
-        "Action": "cms:*",
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ],
-      "Version": "1"
-  }
-  EOF
+{
+  "Statement": [
+    {
+      "Action": "cms:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ],
+    "Version": "1"
+}
+EOF
   description = "Allow access by CS to OSS"
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 
 resource "alicloud_ram_policy" "k8s-AliyunRAMpassrole" {
+  count       = var.enable_alibaba ? 1 : 0
   name        = "k8s-AliyunRAMpassrole"
   document    = <<EOF
-  {
-    "Statement": [
-        {
-          "Action": "ram:PassRole",
-          "Resource": "*",
-          "Effect": "Allow"
-        }
-    ],
-      "Version": "1"
-  }
-  EOF
+{
+  "Statement": [
+      {
+        "Action": "ram:PassRole",
+        "Resource": "*",
+        "Effect": "Allow"
+      }
+  ],
+    "Version": "1"
+}
+EOF
   description = "Allow RAM to pass role"
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_policy" "k8s-AliyunCRaccess" {
+  count       = var.enable_alibaba ? 1 : 0
   name        = "k8s-AliyunCRaccess"
   document    = <<EOF
-  {
-    "Statement": [
-        {
-            "Action": "*",
-            "Resource": "*",
-            "Effect": "Allow"
-        }
-    ],
-      "Version": "1"
-  }
-  EOF
+{
+  "Statement": [
+      {
+          "Action": "*",
+          "Resource": "*",
+          "Effect": "Allow"
+      }
+  ],
+    "Version": "1"
+}
+EOF
   description = "Allow CS to access CR"
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_policy" "k8s-AliyunOOSaccess" {
+  count       = var.enable_alibaba ? 1 : 0
   name        = "k8s-AliyunOOSaccess"
   document    = <<EOF
-  {
-    "Statement": [
-        {
-            "Action": "*",
-            "Resource": "*",
-            "Effect": "Allow"
-        }
-    ],
-      "Version": "1"
-  }
-  EOF
+{
+  "Statement": [
+      {
+          "Action": "*",
+          "Resource": "*",
+          "Effect": "Allow"
+      }
+  ],
+    "Version": "1"
+}
+EOF
   description = "Allow ESS to access OOS"
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 
@@ -287,13 +312,21 @@ resource "alicloud_ram_role" "AliyunCSClusterRole" {
 EOF
   description = "The clusters of Container Service will use this role to access your resources in other services."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunOSSAccess-AliyunCSClusterRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunOSSAccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunOSSAccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunOSSAccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunOSSAccess[count.index].type
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSReadOnlyAccess-AliyunCSClusterRole" {
@@ -301,13 +334,21 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSReadOnlyAccess-A
   policy_name = data.alicloud_ram_policies.AliyunECSReadOnlyAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-AliyunCSClusterRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].type
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-AliyunCSClusterRole" {
@@ -315,6 +356,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunSLBFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-AliyunCSClusterRole" {
@@ -322,6 +367,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunLogFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSClusterRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 ## AliyunCSDefaultRole@role.5395559225751014.onaliyunservice.com
@@ -346,13 +395,21 @@ resource "alicloud_ram_role" "AliyunCSDefaultRole" {
 EOF
   description = "The Container Service will use this role to access your resources in other services."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunRAMpassrole-AliyunCSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunRAMpassrole.name
-  policy_type = alicloud_ram_policy.k8s-AliyunRAMpassrole.type
+  policy_name = alicloud_ram_policy.k8s-AliyunRAMpassrole[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunRAMpassrole[count.index].type
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-AliyunCSDefaultRole" {
@@ -360,6 +417,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunRAMFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-AliyunCSDefaultRole" {
@@ -367,6 +428,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunECSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-AliyunCSDefaultRole" {
@@ -374,6 +439,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunVPCFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-AliyunCSDefaultRole" {
@@ -381,6 +450,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunSLBFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunDNSFullAccess-AliyunCSDefaultRole" {
@@ -388,6 +461,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunDNSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunDNSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-AliyunCSDefaultRole" {
@@ -395,6 +472,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunRDSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunROSFullAccess-AliyunCSDefaultRole" {
@@ -402,6 +483,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunROSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunROSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunESSFullAccess-AliyunCSDefaultRole" {
@@ -409,13 +494,21 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunESSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunESSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-AliyunCSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].type
   role_name   = alicloud_ram_role.AliyunCSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 ## AliyunCSManagedKubernetesRole@role.5395559225751014.onaliyunservice.com
@@ -440,13 +533,21 @@ resource "alicloud_ram_role" "AliyunCSManagedKubernetesRole" {
 EOF
   description = "The Container Service for Managed Kubernetes will use this role to access your resources in other services."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCRaccess-AliyunCSManagedKubernetesRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunCRaccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunCRaccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunCRaccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunCRaccess[count.index].type
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-AliyunCSManagedKubernetesRole" {
@@ -454,6 +555,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRAMFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunRAMFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-AliyunCSManagedKubernetesRole" {
@@ -461,6 +566,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunECSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-AliyunCSManagedKubernetesRole" {
@@ -468,6 +577,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunSLBFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-AliyunCSManagedKubernetesRole" {
@@ -475,6 +588,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunVPCFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSManagedKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 ## AliyunCSServerlessKubernetesRole@role.5395559225751014.onaliyunservice.com
@@ -499,13 +616,21 @@ resource "alicloud_ram_role" "AliyunCSServerlessKubernetesRole" {
 EOF
   description = "The Container Service for Serverless Kubernetes will use this role to access your resources in other services."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCRaccess-AliyunCSServerlessKubernetesRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunCRaccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunCRaccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunCRaccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunCRaccess[count.index].type
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-AliyunCSServerlessKubernetesRole" {
@@ -513,6 +638,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunVPCFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-AliyunCSServerlessKubernetesRole" {
@@ -520,6 +649,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunECSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-AliyunCSServerlessKubernetesRole" {
@@ -527,6 +660,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunSLBFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunPvtzFullAccess-AliyunCSServerlessKubernetesRole" {
@@ -534,6 +671,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunPvtzFullAccess-Aliy
   policy_name = data.alicloud_ram_policies.AliyunPvtzFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECIFullAccess-AliyunCSServerlessKubernetesRole" {
@@ -541,6 +682,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECIFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunECIFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSServerlessKubernetesRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 ## AliyunESSDefaultRole@role.5395559225751014.onaliyunservice.com
@@ -565,27 +710,43 @@ resource "alicloud_ram_role" "AliyunESSDefaultRole" {
 EOF
   description = "The ESS service will use this role to run ECS instances."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunOOSaccess-AliyunESSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunOOSaccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunOOSaccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunOOSaccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunOOSaccess[count.index].type
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunCMSAccess-AliyunESSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess.name
-  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess.type
+  policy_name = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunCMSAccess[count.index].type
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-k8s-AliyunRAMpassrole-AliyunESSDefaultRole" {
   count       = var.enable_alibaba ? 1 : 0
-  policy_name = alicloud_ram_policy.k8s-AliyunRAMpassrole.name
-  policy_type = alicloud_ram_policy.k8s-AliyunRAMpassrole.type
+  policy_name = alicloud_ram_policy.k8s-AliyunRAMpassrole[count.index].name
+  policy_type = alicloud_ram_policy.k8s-AliyunRAMpassrole[count.index].type
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-AliyunESSDefaultRole" {
@@ -593,6 +754,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunECSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunECSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-AliyunESSDefaultRole" {
@@ -600,6 +765,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunSLBFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunSLBFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-AliyunESSDefaultRole" {
@@ -607,6 +776,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunRDSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunRDSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-AliyunESSDefaultRole" {
@@ -614,6 +787,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunVPCFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunVPCFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunMNSFullAccess-AliyunESSDefaultRole" {
@@ -621,6 +798,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunMNSFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunMNSFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunESSDefaultRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 # AliyunCSKubernetesAuditRole@role.5395559225751014.onaliyunservice.com
@@ -645,6 +826,10 @@ resource "alicloud_ram_role" "AliyunCSKubernetesAuditRole" {
 EOF
   description = "The Container Service for Kubernetes will use this role to access your resources in other services."
   force       = true
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-AliyunCSKubernetesAuditRole" {
@@ -652,6 +837,10 @@ resource "alicloud_ram_role_policy_attachment" "attach-AliyunLogFullAccess-Aliyu
   policy_name = data.alicloud_ram_policies.AliyunLogFullAccess[count.index].policies.0.name
   policy_type = "System"
   role_name   = alicloud_ram_role.AliyunCSKubernetesAuditRole[count.index].name
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 
@@ -674,5 +863,5 @@ resource "alicloud_cs_managed_kubernetes" "ack" {
 
   force_update = true
 
-  depends_on = [alicloud_ram_role_policy_attachment.attach-AliyunMNSFullAccess-AliyunESSDefaultRole]
+  depends_on = [alicloud_snat_entry.default]
 }
