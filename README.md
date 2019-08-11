@@ -6,7 +6,7 @@ It uses the latest available Kubernetes version available in the Alibaba Cloud r
 
 
 <p align="center">
-<img alt="Alibaba Cloud Logo" width="600" height="100" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Alibaba-cloud-logo-grey-2-01.png">
+<img alt="Alibaba Cloud Logo" width="400" height="70" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Alibaba-cloud-logo-grey-2-01.png">
 </p>
 
 
